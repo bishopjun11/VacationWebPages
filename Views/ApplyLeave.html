@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>Navigate</title>
+    <link type="text/css" rel="stylesheet" href="../Content/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="../Content/Site.css">
+    <script type="text/javascript" src="../Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../Scripts/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="../Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link type="text/css" rel="stylesheet" href="../Content/bootstrap-datetimepicker.min.css">
+    <!--<script type="text/javascript" src="../Scripts/jquery.datetimepicker.js"></script>
+    <link type="text/css" rel="stylesheet" href="../Content/jquery.datetimepicker.css">-->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#mysubmit').bind('click',myFormValidator);
+      });
+        function myFormValidator() {
+          if($('#leaveDateFrom').val()==''|| $('#leaveDateEnd').val()==''){
+              if($('#leaveDateFrom').val()==''){
+                $('#formGroupLeaveDateFrom').addClass('has-error');
+                $('#formGroupLeaveDateFromHelpBlock').html('');
+                $('#formGroupLeaveDateFromHelpBlock').html('起始日期不能为空。');
+              }
+              if($('#leaveDateEnd').val()==''){
+                  $('#formGroupLeaveDateEnd').addClass('has-error');
+                  $('#formGroupLeaveDateEndHelpBlock').html('');
+                  $('#formGroupLeaveDateEndHelpBlock').html('结束日期不能为空。');
+              }
+              return false;
+          }else{
+              $('#formGroupLeaveDateFrom').removeClass('has-error');
+              $('#formGroupLeaveDateEnd').removeClass('has-error');
+              $('#formGroupLeaveDateEndHelpBlock').html('');
+              $('#formGroupLeaveDateFromHelpBlock').html('');
+              if (Date.parse($('#leaveDateEnd').val()) < Date.parse($('#leaveDateFrom').val())) {
+                 $('#formGroupLeaveDateEnd').addClass('has-error');
+                 $('#formGroupLeaveDateEndHelpBlock').html('');
+                 $('#formGroupLeaveDateEndHelpBlock').html('结束日期不能比起始日期早。');
+                 return false;
+              }else{
+                $('#formGroupLeaveDateEndHelpBlock').html('');
+                $('#formGroupLeaveDateFromHelpBlock').html('');
+                $('#formGroupLeaveDateFrom').removeClass('has-error');
+                $('#formGroupLeaveDateEnd').removeClass('has-error');
+                return ture;
+              }
+            }
+          }
+    </script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">请假单</h3>
+            </div>
+            <div class="panel-body">
+              <form class="">
+                <div class="form-group">
+                  <label for="employeName">员工姓名</label>
+                  <input type="text" class="form-control" id="employeName" placeholder="Eric.Zhao" disabled>
+                </div>
+                <div class="form-group has-warning">
+                  <label for="leavetype">假期类型</label>
+                  <select class="form-control" id="leavetype">
+                    <option>带薪年假</option>
+                    <option>带薪病假</option>
+                    <option>无薪事假</option>
+                    <option>陪产假</option>
+                    <option>产假</option>
+                  </select>
+                  <span class="help-block" id="leaveTypeLeftDay">余额：11天</span>
+                </div>
+                <div class="form-group" id="formGroupLeaveDateFrom">
+                  <label for="leaveDateFrom">请假起始日期</label>
+                  <div class="input-append date form_datetime">
+                    <input class="form-control" id="leaveDateFrom" type="text" value="" placeholder="必选" readonly onchange="myFormValidator()">
+                    <span class="add-on">
+                      <i class="icon-th"></i>
+                    </span>
+                  </div>
+                  <span class="help-block" id="formGroupLeaveDateFromHelpBlock"></span>
+                </div>
+                <div class="form-group" id="formGroupLeaveDateEnd">
+                  <label for="leaveDateEnd">请假结束日期</label>
+                  <div class="input-append date form_datetime">
+                    <input class="form-control" id="leaveDateEnd" type="text" value="" placeholder="必选" readonly onchange="myFormValidator()">
+                    <span class="add-on">
+                      <i class="icon-th"></i>
+                    </span>
+                  </div>
+                  <span class="help-block" id="formGroupLeaveDateEndHelpBlock"></span>
+                  <script type="text/javascript">
+                    $(".form_datetime").datetimepicker({
+                        format: "yyyy-mm-dd hh:ii",
+                        autoclose:true,
+                        todayBtn:true,
+                        showMeridian: true,
+                        language:'zh-CN',
+                        minView:1,
+                        });
+                  </script>
+                </div>
+                <div class="form-group">
+                  <label for="comments">备注</label>
+                  <textarea class="form-control" name="" id="comments" cols="30" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="inputFile">附件</label>
+                  <input type="file" id="inputFile">
+                </div>
+                <button type="button" id="myPreview" class="btn btn-primary">预览</button>&nbsp &nbsp &nbsp &nbsp &nbsp
+                <button type="submit" id="mysubmit" class="btn btn-primary">提交</button>
+              </form>
+              <div class="container">
+                <table class="table-condensed table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>条目</th>
+                      <th>值</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>员工编号</td>
+                      <td>10080</td>
+                    </tr>
+                    <tr>
+                      <td>员工姓名</td>
+                      <td>Landy</td>
+                    </tr>
+                    <tr>
+                      <td>请假类型</td>
+                      <td>带薪年假</td>
+                    </tr>
+                    <tr>
+                      <td>开始日期</td>
+                      <td>2015-06-08 09:00</td>
+                    </tr>
+                    <tr>
+                      <td>结束日期</td>
+                      <td>2015-06-08 09:00</td>
+                    </tr>
+                    <tr>
+                      <td>说明</td>
+                      <td>公司规定的最小单位为0.5（假期单位：天）所提交请假时间将按公司规定进行精度换算。</td>
+                    </tr>
+                    <tr>
+                      <td>请假天数</td>
+                      <td>2</td>
+                    </tr>
+                    <tr>
+                      <td>备注</td>
+                      <td>巴拉巴拉</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--<div class="panel-body">-->
+           </div>
+          <!-- <div class="panel panel-default">--></div>
+        <!--<div class="col-sm-4 col-md-4 col-lg-4">--></div>
+      <!--<div class="row">--></div>
+    <!--<div class="container">-->
+  </body>
+
+</html>
